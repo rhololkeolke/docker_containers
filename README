@@ -1,0 +1,4 @@
+# Docker OpenResty
+
+Dockerfile for Openresty installation. Openresty is nginx packaged with some extra modules like lua. 
+[[http://openresty.org]]
