@@ -3,8 +3,10 @@
 FROM ubuntu
 
 RUN apt-get update && \
-    apt-get install -y ca-certificates wget libreadline-dev libncurses5-dev libpcre3-dev libssl-dev perl make build-essential && \
+    apt-get install -y ca-certificates wget libreadline-dev libncurses5-dev libpcre3-dev libssl-dev perl make build-essential lua5.1 liblua5.1-0 liblua5.1-0-dev luarocks && \
     rm -rf /var/lib/apt/lists/*
+
+RUN luarocks install luajson && luarocks install luasec OPENSSL_LIBDIR=/usr/lib/x86_64-linux-gnu/
 
 RUN wget https://openresty.org/download/ngx_openresty-1.9.3.1.tar.gz && \
     tar -xzf ngx_openresty-1.9.3.1.tar.gz && \ 
@@ -12,6 +14,9 @@ RUN wget https://openresty.org/download/ngx_openresty-1.9.3.1.tar.gz && \
     ./configure && \
     make -j4 && \
     make install
+
+RUN rm ngx_openresty-1.9.3.1.tar.gz && \
+    rm -rf ngx_openresty-1.9.3.1
 
 # put the nginx files back in their default locations
 RUN ln -s /usr/local/openresty/nginx/sbin/nginx /usr/sbin/nginx && \
