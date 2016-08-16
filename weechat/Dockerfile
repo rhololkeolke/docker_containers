@@ -1,3 +1,5 @@
+## -*- docker-image-name: "rhololkeolke/weechat" -*-
+
 FROM ubuntu
 RUN apt-get -y update && apt-get -y install weechat sudo
 
