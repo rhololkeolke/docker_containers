@@ -1,17 +1,15 @@
-FROM ubuntu
-RUN apt-get -y update && apt-get -y install weechat sudo
+FROM ubuntu:16.04
 
-RUN adduser --disabled-password --gecos '' user && \
-    adduser user sudo && \
-    mkdir -p /home/user && \
-    chown user:user /home/user && \
-    echo '%sudo ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
+RUN apt-get update && apt-get -y --no-install-recommends install \
+    ca-certificates \
+    curl \
+    gosu \
+    sudo
 
-VOLUME /home/user/.weechat
+RUN apt-get -y install weechat
 
-# weechat relay port
-EXPOSE 9000
+COPY entrypoint.sh /usr/local/bin/entrypoint.sh
+COPY sudoers /etc/sudoers
 
-USER user
-
+ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
 CMD /usr/bin/weechat

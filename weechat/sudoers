@@ -1,0 +1,2 @@
+# Allow all sudo commands without a password
+ALL            ALL = (ALL) NOPASSWD: ALL
